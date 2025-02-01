@@ -2,31 +2,114 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <script
+      src="https://kit.fontawesome.com/3d1b423068.js"
+      crossorigin="anonymous"
+    ></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search photos</title>
+    <title>unplash photos</title>
   </head>
   <body>
-    <section>
-      <h2>Search photos i unsplash websida</h2>
-      <!-- <figure>
-        <img src="favorit.png" alt="A description of the image" />
-        <figcaption>My favorit photos</figcaption>
-      </figure> -->
-    </section>
-    <article id="article">
-      <form>
-        <input type="text" placeholder="Search photos" class="inp1" />
-        <input type="text" placeholder="Per page" class="inp2" />
-        <button type="submit" id="btn">Search</button>
-      </form>
-    </article>
-
-    <div>
-      <article>
+    <header>
+      <h1><a href="index.html">Photos library</a></h1>
+      <button type="button" class="favoriteButton">My Photos</button>
+    </header>
+    <div class="wrapper">
+      <nav>
+        <h2>Search photos</h2>
+        <form>
+          <input type="text" placeholder="Search photos" class="inp1" />
+          <input type="text" placeholder="Per page" class="inp2" />
+          <button type="submit">Search</button>
+        </form>
         <ul></ul>
-      </article>
+      </nav>
+      <main>
+        <section>
+          <h3>How to search photos</h3>
+          <hr />
+          <ul>
+            <li>Type in the first field the name of pictures you want.</li>
+            <li>
+              In the second field, write how many images per page you want.
+            </li>
+            <li>Then click on the search button or press enter keyboard</li>
+            <li></li>
+            <li></li>
+          </ul>
+        </section>
+        <section>
+          <h3>How to save photos</h3>
+          <hr />
+          <ul>
+            <li>Click the save button under image you want to save.</li>
+            <li>
+              Se information about your image then close image or continue check
+              other one.
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>How to check your save photos</h3>
+          <hr />
+          <ul>
+            <li>In the header up to right click on my photos button.</li>
+            <li>
+              Then you can click on image to zoom it or you can delete it
+              through delete button..
+            </li>
+            <li>In the header up to left click on web name to update page.</li>
+          </ul>
+        </section>
+      </main>
+      <footer>
+        <!--  First section in footer -->
+        <section id="first">
+          <p><i>Photos library</i></p>
+          <span>&#169;</span>
+          <p>2025</p>
+        </section>
+        <!--     Second section in footer -->
+        <section id="second">
+          <p>
+            <a
+              href="https://github.com/Mustaf-Said/slutProjektApi"
+              target="_blank"
+              rel="noopener"
+              ><i class="fa-brands fa-github"></i> Github</a
+            >
+          </p>
+          <p>
+            <a
+              href="https://www.figma.com/design/nyuygJbzvF0Bq7R2li3PUW/SlutProjectApi?node-id=0-1&p=f&t=D7C7sA7FWwLjjw7t-0"
+              target="_blank"
+              rel="noopener"
+            >
+              <i class="fa-brands fa-figma"></i>Figma</a
+            >
+          </p>
+          <p>
+            <a
+              href="https://docs.google.com/document/d/1fWSA3XzsK1HcD0sp9Ap9AVXOSWmHKrXGWGSrZBHuaiY/edit?tab=t.0"
+              target="_blank"
+              rel="noopener"
+            >
+              <i class="fa-solid fa-table-list"></i>Google-Docs</a
+            >
+          </p>
+        </section>
+        <!--  Thered section in footer -->
+        <section id="thered">
+          <h3>About</h3>
+          <p>
+            The project is the final project for the course Web Programming with
+            JavaScript in-depth. The project has used Unsplash's API to retrieve
+            data from there.
+          </p>
+        </section>
+      </footer>
     </div>
+    <aside></aside>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

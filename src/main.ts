@@ -1,89 +1,188 @@
 import "./style.scss";
-import "../componanse/lightBox.scss";
+import "./access_key";
+const access_key: string =
+  "Client-ID 5f8zX0jzSeoN_-oYZu6-f4OSV8SvrucmOhL8IkPIyCY";
 
-const access_key = "Client-ID 5f8zX0jzSeoN_-oYZu6-f4OSV8SvrucmOhL8IkPIyCY";
+const form = document.querySelector<HTMLFormElement>("form");
+const inputQuery = document.querySelector<HTMLInputElement>(".inp1");
+const inputPerPage = document.querySelector<HTMLInputElement>(".inp2");
+const photoList = document.querySelector<HTMLUListElement>("ul");
+const favoriteListPhoto =
+  document.querySelector<HTMLButtonElement>(".favoriteButton");
+const searchPhotoLista = document.querySelector<HTMLDivElement>(".wrapper");
+const myPhotos = document.querySelector<HTMLElement>("aside");
 
-const form = document.querySelector("form") as HTMLFormElement;
-const inp1 = document.querySelector(".inp1") as HTMLInputElement;
-const inp2 = document.querySelector(".inp2") as HTMLInputElement;
-const ul_photos = document.querySelector("ul") as HTMLUListElement;
+// Favorite list
+let favoriteList: any[] = [];
+let myphotosVisible: boolean = false;
 
-interface Photo {
-  urls: {
-    small: string;
-  };
-  
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const savedFavorites = localStorage.getItem("favorites");
+  if (savedFavorites) {
+    favoriteList = JSON.parse(savedFavorites);
+  }
+});
 
-function photosLoop(getPhotos: Photo[]): void {
-  ul_photos.innerHTML = "";
+// Render favorite list
+const renderLightbox = (photos: any[], index: number) => {
+  let currentIndex = index;
+  let lightbox = document.getElementById("lightbox") as HTMLDivElement | null;
 
-  let currentIndex: number= 0;
-  getPhotos.forEach((photo) => {
-    const li: HTMLLIElement = document.createElement("li");
-    li.innerHTML = `<img src="${photo.urls.small}">`;
-    ul_photos.appendChild(li);
-    const lightbox = document.createElement("div");
+  if (!lightbox) {
+    lightbox = document.createElement("div");
     lightbox.id = "lightbox";
     document.body.appendChild(lightbox);
+  }
 
-    li.addEventListener("click", () => {
-      lightbox.classList.add("active");
-      const left = document.createElement("p");
-      const img = document.createElement("img");
-      const right = document.createElement("span");
+  lightbox.classList.add("active");
+  lightbox.innerHTML = "";
 
-      img.src = `${photo.urls.small}`;
+  const img = document.createElement("img");
+  const left = document.createElement("span");
+  const description = document.createElement("p");
+  const created_at = document.createElement("p");
+  const right = document.createElement("span");
 
-      while (lightbox.firstChild) {
-        lightbox.removeChild(lightbox.firstChild);
+  const updateLightbox = () => {
+    img.src = photos[currentIndex].urls.small;
+    description.textContent = `Description: ${photos[currentIndex].slug}`;
+    created_at.innerHTML = `Created: ${photos[currentIndex].created_at} <br> By: ${photos[currentIndex].user.name}`;
+  };
+
+  left.innerHTML = "<";
+  right.innerHTML = ">";
+
+  lightbox.append(img, description, created_at, left, right);
+  left.classList.add("left");
+  right.classList.add("right");
+
+  left.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+    updateLightbox();
+  });
+
+  right.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % photos.length;
+    updateLightbox();
+  });
+
+  lightbox.addEventListener("click", (e: MouseEvent) => {
+    if (e.target !== e.currentTarget) return;
+    lightbox?.classList.remove("active");
+  });
+
+  updateLightbox();
+};
+
+// Render photos after search
+function renderPhotos(getPhotos: any[]) {
+  if (!photoList) return;
+  photoList.innerHTML = "";
+
+  getPhotos.forEach((photo, index) => {
+    const li = document.createElement("li");
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Add to Favorites";
+
+    const img = document.createElement("img");
+    img.src = photo.urls.small;
+
+    li.append(img, saveButton);
+    photoList.appendChild(li);
+
+    saveButton.addEventListener("click", () => {
+      renderLightbox(getPhotos, index);
+      if (!favoriteList.some((fav) => fav.id === photo.id)) {
+        favoriteList.push(photo);
+        localStorage.setItem("favorites", JSON.stringify(favoriteList));
+      } else {
+        alert("This photo is already in your favorites");
       }
-
-      lightbox.appendChild(img);
-      left.innerHTML = "<";
-      right.innerHTML = ">";
-      lightbox.appendChild(left);
-      lightbox.appendChild(right);
-      left.classList.add("left");
-      right.classList.add("right");
-
-      left.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + getPhotos.length) % getPhotos.length;
-        img.src = getPhotos[currentIndex].urls.small;
-      });
-
-      right.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % getPhotos.length;
-        img.src = getPhotos[currentIndex].urls.small;
-      });
-
-      lightbox.addEventListener("click", (e) => {
-        if (e.target !== e.currentTarget) return;
-        lightbox.classList.remove("active");
-      });
     });
   });
 }
 
-const searchPhotos = async (photos: string, pages: string): Promise<void> => {
-  const res = await fetch(
-    `https://api.unsplash.com/search/photos?query=${photos}&per_page=${pages}`,
-    {
-      headers: {
-        Authorization: access_key,
-      },
-    }
-  );
+favoriteListPhoto?.addEventListener("click", () => {
+  if (!myPhotos || !searchPhotoLista || !favoriteListPhoto) return;
 
-  const data = await res.json();
-  console.log(data.results);
-  photosLoop(data.results);
-  console.log(data.results);
+  myPhotos.innerHTML = "";
+  myphotosVisible = !myphotosVisible;
+  favoriteListPhoto.textContent = myphotosVisible
+    ? "Back to Search"
+    : "My Photos";
+  searchPhotoLista.style.display = myphotosVisible ? "none" : "block";
+  myPhotos.style.display = myphotosVisible ? "block" : "none";
+
+  if (myphotosVisible) {
+    favoriteList.forEach((photo, index) => {
+      const divPhotoList = document.createElement("div");
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "x";
+
+      const img = document.createElement("img");
+      img.src = photo.urls.small;
+      divPhotoList.append(img, deleteButton);
+      myPhotos.appendChild(divPhotoList);
+
+      img.addEventListener("click", () => {
+        renderLightbox(favoriteList, index);
+      });
+
+      deleteButton.addEventListener("click", () => {
+        favoriteList.splice(index, 1);
+        localStorage.setItem("favorites", JSON.stringify(favoriteList));
+        divPhotoList.remove();
+      });
+    });
+  }
+});
+
+const searchPhotos = async (photos: string, pages: number) => {
+  try {
+    const res = await fetch(
+      `https://api.unsplash.com/search/photos?query=${photos}&per_page=${pages}`,
+      {
+        headers: {
+          Authorization: `${access_key}`,
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderPhotos(data.results);
+  } catch (error) {
+    console.error("Failed to fetch photos:", error);
+    if (photoList) {
+      photoList.innerHTML = `<li>Error loading photos. Please try again later.</li>`;
+    }
+  }
 };
 
-form.addEventListener("submit", (e: Event) => {
+form?.addEventListener("submit", (e: Event) => {
   e.preventDefault();
-  searchPhotos(inp1.value, inp2.value);
-  inp1.value = "";
-  inp2.value = "";
+
+  if (!inputQuery || !inputPerPage) return;
+
+  const query = inputQuery.value.trim();
+  const perPage = parseInt(inputPerPage.value, 10);
+
+  if (!query || isNaN(perPage) || perPage <= 0) {
+    alert("Please enter a valid search term and number of photos per page.");
+    return;
+  }
+
+  searchPhotos(query, perPage);
+  inputQuery.value = "";
+  inputPerPage.value = "";
+
+  myphotosVisible = false;
+  if (searchPhotoLista && myPhotos && favoriteListPhoto) {
+    searchPhotoLista.style.display = "block";
+    myPhotos.style.display = "none";
+    favoriteListPhoto.textContent = "My Photos";
+  }
 });
