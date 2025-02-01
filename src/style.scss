@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap");
+
+$background: rgb(153, 190, 227);
+$bColor: #fff;
+$bHover: rgb(117, 155, 194);
+$background2: rgb(189, 189, 193);
+/* $img-path: "./search.png"; */
+
+@mixin margin-padding {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  @include margin-padding;
+  box-sizing: border-box;
+}
+
+body {
+  box-sizing: border-box;
+  text-align: center;
+  background-image: linear-gradient(
+    to right,
+    $background2,
+    $background,
+    $background,
+    $background,
+    $background2
+  );
+  color: $bColor;
+  font-family: "Playfair Display", serif;
+}
+h2 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.5em;
+  margin: 0.7em;
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+  h2 {
+    font-weight: 700;
+    font-size: 2.5em;
+  }
+  figure img {
+    width: 30%;
+    height: 7vh;
+    cursor: pointer;
+  }
+}
+
+#article {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 1.7em;
+  form {
+    input {
+      padding: 1.1rem 4.5em;
+      border-radius: 9px;
+      font-size: 0.9em;
+      border: none;
+    }
+
+    button[type="submit"] {
+      font-size: 1.2em;
+      padding: 0.85rem 1.7em 0.88em 1.7em;
+      border-radius: 9px;
+      color: $bColor;
+      background: $bHover;
+      transition: all 1s linear;
+      border: none;
+      cursor: pointer;
+      &:hover {
+        color: $bHover;
+        background: $bColor;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+}
+
+ul {
+  display: flex;
+  gap: 0.9rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  width: 70%;
+  li {
+    align-self: center;
+    max-width: 100%;
+    max-height: 100vh;
+    list-style: none;
+    img {
+      width: 200px;
+      height: 200px;
+      cursor: pointer;
+      border-radius: 10%;
+    }
+  }
+}
+
+.left {
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 50px;
+  color: $bHover;
+  background-color: $bColor;
+  padding: 0 0.35em;
+  border-radius: 0.35em;
+  &:hover {
+    color: $bColor;
+    background: $bHover;
+  }
+}
+.right {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 50px;
+  color: $bHover;
+  background-color: #fff;
+  padding: 0 0.35em;
+  border-radius: 0.35em;
+  &:hover {
+    color: $bColor;
+    background: $bHover;
+  }
+}
