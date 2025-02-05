@@ -1,9 +1,8 @@
+@use "farwords";
+
 main {
   grid-area: main;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  flex-wrap: wrap;
+  @include farwords.flexBox(space-around, row);
   width: 90%;
 
   hr {

@@ -10,8 +10,7 @@ aside {
     cursor: pointer;
 
     img {
-      width: 280px;
-      height: 300px;
+      @include farwords.sizeStyle;
       border-radius: 11px;
       position: relative;
       box-shadow: -3px -3px 7px 7px #515151;

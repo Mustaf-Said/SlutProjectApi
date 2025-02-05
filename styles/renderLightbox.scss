@@ -1,4 +1,4 @@
-/* @use "../src/style.scss" as *; */
+@use "farwords";
 
 #lightbox {
   position: fixed;
@@ -11,9 +11,8 @@
   display: none;
 
   img {
-    width: 280px;
-    height: 300px;
-    border: 5px solid #fff;
+    @include farwords.sizeStyle;
+    border: 5px solid farwords.$text-color;
     margin-bottom: 7px;
     cursor: none;
   }
@@ -26,12 +25,12 @@
 
   &::after {
     content: "Click around photo to close it";
-    color: #fff;
+    color: farwords.$text-color;
     position: absolute;
     top: 5px;
     font-weight: 900;
     padding: 1em;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid farwords.$text-color;
   }
 
   &.active {
@@ -39,7 +38,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    /*  padding-top: 50px; */
+    @include farwords.flexBox(center, column);
     cursor: pointer;
   }
 }
@@ -52,13 +51,13 @@
   cursor: pointer;
   font-size: 50px;
   color: black;
-  background-color: #fff;
+  background-color: farwords.$text-color;
   padding: 0 9px;
   border-radius: 7px;
 
   &:hover {
     background: #888787;
-    color: #fff;
+    color: farwords.$text-color;
   }
 }
 
