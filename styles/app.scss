@@ -1,0 +1,196 @@
+@use "farwords";
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  text-align: center;
+  box-sizing: border-box;
+  color: farwords.$text-color;
+  background: farwords.$bodyBackground;
+  min-width: 380px;
+  font-family: "Playfair Display", serif;
+  background-image: linear-gradient(
+    to right,
+    #434343,
+    #908f8f,
+    #908f8f,
+    #908f8f,
+    #434343
+  );
+}
+
+header {
+  @include farwords.flexBox(space-between, none);
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  padding: 1em;
+  height: 22vh;
+  background: #434343;
+  opacity: 80%;
+
+  h1 a {
+    color: farwords.$text-color;
+    text-decoration: none;
+    font-size: 2.7rem;
+    box-shadow: farwords.$head-shadow;
+    text-shadow: farwords.$textShadow;
+    padding-left: 7px;
+    &:hover {
+      color: farwords.$hoverColor;
+    }
+  }
+
+  button {
+    color: farwords.$text-color;
+    background: farwords.$hoverColor;
+    padding: 1em 2em;
+    @include farwords.borderStyle(5px);
+    font-weight: 700;
+    transition: 0.3s;
+    &:hover {
+      background: farwords.$text-color;
+      color: #212121;
+    }
+  }
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "header header header header"
+    "nav nav nav nav"
+    "main main main main"
+    "footer footer footer footer";
+
+  nav {
+    @include farwords.flexBox(none, column);
+    grid-area: nav;
+    padding: 1em;
+
+    h2 {
+      margin: 1em 0;
+    }
+
+    input {
+      padding: 1em 7.5em;
+      @include farwords.borderStyle(13px 0 13px 0);
+    }
+
+    button {
+      @include farwords.fontStyle(0.75em 1.9em);
+      @include farwords.borderStyle(13px 0 13px 0);
+      background: farwords.$text-color;
+      &:hover {
+        color: farwords.$text-color;
+        background: farwords.$hoverColor;
+      }
+    }
+
+    ul {
+      @include farwords.flexBox(center, row);
+      width: 100%;
+      margin-top: 1.5rem;
+
+      li {
+        list-style: none;
+        @include farwords.flexBox(center, column);
+        padding: 1em;
+
+        img {
+          width: 280px;
+          height: 300px;
+          border-radius: farwords.$imgBorderRadius;
+          box-shadow: farwords.$imgBoxShadow;
+        }
+
+        button {
+          width: 280px;
+          cursor: pointer;
+          box-shadow: 1px 3px #515151;
+          border-radius: 0 0 9px 9px;
+          &:hover {
+            color: farwords.$text-color;
+            background: farwords.$bodyBackground;
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}
+footer {
+  grid-area: footer;
+  @include farwords.flexBox(space-between, none);
+  width: 100%;
+  padding: 1em;
+  color: farwords.$bodyBackground;
+  background: #434343;
+  p:hover,
+  h3:hover {
+    color: farwords.$text-color;
+  }
+
+  a {
+    color: farwords.$bodyBackground;
+    text-decoration: none;
+    &:hover {
+      color: farwords.$text-color;
+    }
+  }
+
+  #first,
+  #second,
+  #thered {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  #first {
+    align-items: center;
+    width: 25%;
+  }
+
+  #second {
+    align-items: start;
+    flex-direction: column;
+    width: 30%;
+    i {
+      font-size: 1.5em;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+  }
+  #thered {
+    align-items: center;
+    flex-direction: column;
+    width: 30%;
+    p {
+      word-break: break-all;
+    }
+  }
+}
+@media screen and (max-width: 512px) {
+  header {
+    height: 30vh;
+  }
+
+  nav input {
+    margin: 1em;
+  }
+
+  body {
+    min-width: 400px;
+  }
+
+  main section,
+  footer {
+    display: none;
+  }
+}

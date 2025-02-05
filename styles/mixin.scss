@@ -1,0 +1,23 @@
+//@mixin and @include
+@mixin flexBox($justify-content, $flexDirection) {
+  justify-content: $justify-content;
+  flex-direction: $flexDirection;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@mixin fontStyle($padding) {
+  padding: $padding;
+  font: {
+    size: 1rem;
+    weight: 700;
+  }
+}
+
+@mixin borderStyle($radius) {
+  border: {
+    radius: $radius;
+    style: none;
+  }
+}

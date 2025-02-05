@@ -1,0 +1,36 @@
+@use "farwords";
+
+aside {
+  position: absolute;
+
+  div {
+    display: inline-block;
+    flex-wrap: wrap;
+    padding: 1.5em;
+    cursor: pointer;
+
+    img {
+      width: 280px;
+      height: 300px;
+      border-radius: 11px;
+      position: relative;
+      box-shadow: -3px -3px 7px 7px #515151;
+    }
+
+    button {
+      position: absolute;
+      padding: 3px 0.4em;
+      border-radius: calc(1.7rem + 3px);
+      border: none;
+      font: {
+        size: 1rem;
+        weight: 700;
+      }
+      color: #252525;
+      &:hover {
+        background: rgb(223, 123, 123);
+        color: farwords.$text-color;
+      }
+    }
+  }
+}

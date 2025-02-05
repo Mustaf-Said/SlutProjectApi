@@ -1,0 +1,33 @@
+main {
+  grid-area: main;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+
+  hr {
+    border: {
+      radius: 1em;
+      style: dashed;
+      width: 2px;
+      color: #cecccc;
+    }
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+  section {
+    padding: 2em;
+    width: 45%;
+
+    ul {
+      list-style: none;
+      li {
+        line-height: 1.7em;
+        text-align: left;
+        word-break: break-all;
+      }
+    }
+  }
+}
